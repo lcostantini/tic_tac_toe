@@ -18,6 +18,10 @@ defmodule TicTacToe.Game do
     GenServer.call(game, {:join, player_pid})
   end
 
+  def put(game, value, position) do
+    GenServer.call(game, {:put, value, position})
+  end
+
   def init(_) do
     {:ok, %TicTacToe.Game{}}
   end
@@ -34,6 +38,36 @@ defmodule TicTacToe.Game do
       true ->
         {:reply, :error, state}
     end
+  end
+
+  def handle_call({:put, value, position}, _form, %{waiting: value} = state) do
+    case TicTacToe.Board.put(state.board, value, position) do
+      {:ok, board} ->
+        cond do
+          winner = TicTacToe.Board.winner(board) ->
+            notify_winner(state.player1, winner == :x, board)
+            notify_winner(state.player2, winner == :o, board)
+          TicTacToe.Board.full?(board) ->
+            notify_draw(state.player1, state.player2, board)
+          true ->
+            state = next_turn(%{state | board: board})
+            {:reply, {:ok, board}, state}
+        end
+      {:error, _} -> {:reply, :retry, state}
+    end
+  end
+
+  defp notify_winner(player_pid, true, board) do
+    send(player_pid, {:you_won, board})
+  end
+
+  defp notify_winner(player_pid, false, board) do
+    send(player_pid, {:you_lost, board})
+  end
+
+  defp notify_draw(player1_pid, player2_pid, board) do
+    send(player1_pid, {:draw, board})
+    send(player2_pid, {:draw, board})
   end
 
   defp next_turn(%{waiting: :o, player1: player1, board: board} = state) do
