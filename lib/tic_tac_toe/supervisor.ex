@@ -9,11 +9,15 @@ defmodule TicTacToe.Supervisor do
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
+  def start_game(name) do
+    Supervisor.start_child(__MODULE__, name)
+  end
+
   def init(:ok) do
     children = [
-      worker(TicTacToe.Registry, [])
+      worker(TicTacToe.Game, [], restart: :temporary)
     ]
 
-    supervise(children, strategy: :one_for_one)
+    supervise(children, strategy: :simple_one_for_one)
   end
 end
