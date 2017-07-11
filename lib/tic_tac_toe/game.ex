@@ -22,6 +22,10 @@ defmodule TicTacToe.Game do
     GenServer.call(game, {:put, value, position})
   end
 
+  def restart_game(game) do
+    GenServer.call(game, :restart_game)
+  end
+
   def init(_) do
     {:ok, %TicTacToe.Game{}}
   end
@@ -55,6 +59,10 @@ defmodule TicTacToe.Game do
         end
       {:error, _} -> {:reply, :retry, state}
     end
+  end
+
+  def handle_call(:restart_game, _from, state) do
+    {:reply, {state.player1, state.player2}, state}
   end
 
   defp notify_winner(player_pid, true, board) do
