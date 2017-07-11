@@ -1,0 +1,9 @@
+{application,tic_tac_toe,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"tic_tac_toe"},
+              {modules,['Elixir.TicTacToe','Elixir.TicTacToe.Board',
+                        'Elixir.TicTacToe.Registry',
+                        'Elixir.TicTacToe.Supervisor']},
+              {registered,[]},
+              {vsn,"0.1.0"},
+              {extra_applications,[logger]}]}.
