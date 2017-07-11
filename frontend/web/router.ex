@@ -13,5 +13,7 @@ defmodule FrontTicTac.Router do
     pipe_through :browser
 
     resources "/games", GameController, only: [:index, :create, :show], param: "name"
+
+    post "/players", PlayerController, param: "name"
   end
 end
