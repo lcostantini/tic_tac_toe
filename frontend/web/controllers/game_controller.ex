@@ -1,4 +1,4 @@
-defmodule FrontTicTac.PageController do
+defmodule FrontTicTac.GameController do
   use FrontTicTac.Web, :controller
 
   def index(conn, _params) do
