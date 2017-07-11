@@ -1,3 +1,4 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
+<div class="game-buttons">
+  <a class="pure-button" href="/players">Player vs Player</a>
+  <a class="pure-button" href="/games/new">Player vs CPU</a>
 </div>
