@@ -20,4 +20,8 @@ defmodule FrontTicTac.GameController do
   def show(conn, %{"name" => name}) do
     render conn, "show.html", name: name
   end
+
+  def new(conn, _params) do
+    render conn, "new.html"
+  end
 end

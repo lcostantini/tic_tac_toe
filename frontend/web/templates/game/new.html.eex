@@ -1,0 +1,9 @@
+<div class="pure-form">
+  <%= form_for @conn, game_path(@conn, :create), [as: :game], fn f -> %>
+  <div class="input-group">
+    <%= text_input f, :name, placeholder: "Enter a game name",
+      autofocus: true, class: "form-control" %>
+    <%= submit "Play", class: "pure-button button-success" %>
+  </div>
+  <% end %>
+</div>
