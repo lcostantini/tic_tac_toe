@@ -17,7 +17,8 @@ defmodule FrontTicTac.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {FrontTicTac, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext]]
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
+                    :gettext, :tic_tac_toe]]
   end
 
   # Specifies which paths to compile per environment.
@@ -33,6 +34,7 @@ defmodule FrontTicTac.Mixfile do
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:tic_tac_toe, path: "../backend"}]
   end
 end
