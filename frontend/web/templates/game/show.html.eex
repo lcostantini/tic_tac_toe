@@ -1,1 +1,17 @@
-<h1>Board</h1>
+<table id="game" data-name="<%= @name %>">
+  <tr class="top">
+    <td id="index_0" class="left" data-index="0"></td>
+    <td id="index_1" data-index="1"></td>
+    <td id="index_2" class="right" data-index="2"></td>
+  </tr>
+  <tr>
+    <td id="index_3" class="left" data-index="3"></td>
+    <td id="index_4" data-index="4"></td>
+    <td id="index_5" class="right" data-index="5"></td>
+  </tr>
+  <tr class="bottom">
+    <td id="index_6" class="left" data-index="6"></td>
+    <td id="index_7" data-index="7"></td>
+    <td id="index_8" class="right" data-index="8"></td>
+  </tr>
+</table>
