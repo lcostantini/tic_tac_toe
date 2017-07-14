@@ -8,7 +8,7 @@ defmodule TicTacToe.Game do
   defstruct board: %TicTacToe.Board{}, player1: nil, player2: nil, waiting: :o
 
   def start_link(name) do
-    GenServer.start_link(__MODULE__, :ok, name: name)
+    GenServer.start_link(__MODULE__, nil, name: via_tuple(name))
   end
 
   @doc """
@@ -26,6 +26,14 @@ defmodule TicTacToe.Game do
     GenServer.call(game, :restart_game)
   end
 
+  def whereis(name) do
+    :gproc.whereis_name({:n, :l, {:game, name}})
+  end
+
+  defp via_tuple(name) do
+    {:via, :gproc, {:n, :l, {:game, name}}}
+  end
+
   def init(_) do
     {:ok, %TicTacToe.Game{}}
   end
@@ -34,11 +42,11 @@ defmodule TicTacToe.Game do
     cond do
       is_nil(state.player1) ->
         state = %{state | player1: player_pid}
-        {:reply, {:ok, :x}, state}
+        {:reply, {:ok, :x, state}, state}
       is_nil(state.player2) ->
         state = %{state | player2: player_pid}
         state = next_turn(state)
-        {:reply, {:ok, :o}, state}
+        {:reply, {:ok, :o, state}, state}
       true ->
         {:reply, :error, state}
     end

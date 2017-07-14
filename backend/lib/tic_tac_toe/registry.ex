@@ -6,17 +6,17 @@ defmodule TicTacToe.Registry do
   use GenServer
 
   def start_link do
-    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
   def game_process(name) do
-    case Process.whereis(name) do
+    case TicTacToe.Game.whereis(name) do
       :undefined -> GenServer.call(__MODULE__, {:game_process, name})
       pid -> pid
     end
   end
 
-  def init(:ok) do
+  def init(_) do
     {:ok, %{}}
   end
 
