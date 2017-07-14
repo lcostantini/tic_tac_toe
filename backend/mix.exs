@@ -13,12 +13,12 @@ defmodule TicTacToe.Mixfile do
 
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :gproc],
       mod: {TicTacToe, []}
     ]
   end
 
   defp deps do
-    []
+    [ {:gproc, "0.5.0"} ]
   end
 end
