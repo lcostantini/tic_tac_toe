@@ -11,11 +11,11 @@ defmodule TicTacToe.Board do
   Insert a value into the board.
   """
   def put(board, position, value) when value in @values do
-    case Enum.at(board.data, position) do
+    case Enum.at(board.data, position, :error) do
       nil ->
-        data = put_elem(board.data, position, value)
-        {:ok, %TicTacToe.Board{data: data}}
-      _ -> :error
+        data = List.replace_at(board.data, position, value)
+        {:ok, %TicTacToe.Board{board | data: data}}
+      :error -> :error
     end
   end
 
