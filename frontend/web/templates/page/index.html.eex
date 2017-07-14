@@ -1,4 +1,4 @@
 <div class="game-buttons">
   <%= button "Player vs CPU", to: "/games?name=player_vs_cpu", class: "pure-button" %>
-  <%= button "Player vs Player", to: "/players?name=anonymous", class: "pure-button" %>
+  <%= button "Player vs Player", to: "/players", class: "pure-button" %>
 </div>

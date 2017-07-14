@@ -6,7 +6,7 @@
   Waiting for a second player...
 </div>
 
-<table id="game" data-name="<%= @name %>">
+<table id="game" data-name="<%= @name %>" class="hidden">
   <tr class="top">
     <td id="index_0" class="left" data-index="0"></td>
     <td id="index_1" data-index="1"></td>
@@ -40,3 +40,5 @@
     </div>
   </div>
 </div>
+
+<script>window.currentPlayer="<%= @conn.assigns.current_player %>"</script>

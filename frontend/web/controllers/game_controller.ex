@@ -20,7 +20,11 @@ defmodule FrontTicTac.GameController do
   end
 
   def show(conn, %{"name" => name}) do
-    render conn, "show.html", name: name
+    player = get_session(conn, :current_player)
+
+    conn
+    |> assign(:current_player, player)
+    |> render("show.html", name: name)
   end
 
   def new(conn, _params) do
