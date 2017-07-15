@@ -32,6 +32,13 @@ defmodule FrontTicTac.GameChannel do
     {:noreply, socket}
   end
 
+  def handle_in("new_round", _params, socket) do
+    game = TicTacToe.Registry.game_process(socket.assigns.game)
+    game_state = TicTacToe.Game.new_round(game)
+    broadcast! socket, "new_round", game_state
+    {:noreply, socket}
+  end
+
   def handle_info({:after_join, game_state}, socket) do
     broadcast! socket, "new_player", game_state
     {:noreply, socket}
