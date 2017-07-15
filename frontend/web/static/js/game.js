@@ -1,6 +1,8 @@
 let Game = {
-  game: document.getElementById("game"),
+  stats: document.getElementById("stats"),
   waiting: document.getElementById("waiting"),
+  newGame: document.getElementById("new_game"),
+  game: document.getElementById("game"),
   fullGame: document.getElementById("full_game"),
   xName: document.getElementById("x_name"),
   oName: document.getElementById("o_name"),
@@ -18,7 +20,7 @@ let Game = {
     gameChannel.join()
       .receive("ok", resp => {
       })
-      .receive("error", reason => {
+      .receive("error", (reason) => {
         this.show(this.fullGame)
       })
 
@@ -27,6 +29,7 @@ let Game = {
         this.updateBoard(resp)
         this.updateStats(resp)
         this.hide(this.waiting)
+        this.hide(this.newGame)
         this.show(this.game)
         this.show(this.stats)
       } else {
@@ -34,20 +37,37 @@ let Game = {
       }
     })
 
+    gameChannel.on("player_left", (resp) => {
+      this.hide(this.stats)
+      this.hide(this.game)
+      this.hide(this.newGame)
+      this.show(this.waiting)
+    })
+
     gameChannel.on("update_board", (resp) => {
       this.updateBoard(resp)
     })
 
-    gameChannel.on("player_left", (resp) => {
-      this.hide(this.stats)
-      this.hide(this.game)
-      this.show(this.waiting)
+    gameChannel.on("new_round", (resp) => {
+      this.hide(this.newGame)
+      this.updateBoard(resp)
+    })
+
+    gameChannel.on("finish_game", (resp) => {
+      this.updateBoard(resp)
+      this.updateStats(resp)
+      this.show(this.newGame)
     })
 
     game.addEventListener("click", (e) => {
       e.preventDefault()
       let index = e.target.getAttribute("data-index")
       gameChannel.push("put", {index: index})
+    })
+
+    this.newGame.addEventListener("click", (e) => {
+      e.preventDefault()
+      gameChannel.push("new_round")
     })
   },
 
