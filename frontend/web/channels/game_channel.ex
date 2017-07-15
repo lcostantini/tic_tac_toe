@@ -17,6 +17,21 @@ defmodule FrontTicTac.GameChannel do
     end
   end
 
+  def handle_in("put", %{"index" => index}, socket) do
+    game = TicTacToe.Registry.game_process(socket.assigns.game)
+    case TicTacToe.Game.put(game, socket.assigns.symbol, String.to_integer(index)) do
+      {:ok, game_state} ->
+        broadcast! socket, "update_board", game_state
+      {:draw, game_state} ->
+        broadcast! socket, "finish_game", game_state
+      {:winner, _symbol, game_state} ->
+        broadcast! socket, "finish_game", game_state
+      _ ->
+        :ok
+    end
+    {:noreply, socket}
+  end
+
   def handle_info({:after_join, game_state}, socket) do
     broadcast! socket, "new_player", game_state
     {:noreply, socket}
