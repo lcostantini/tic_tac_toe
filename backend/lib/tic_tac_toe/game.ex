@@ -51,13 +51,13 @@ defmodule TicTacToe.Game do
     {:reply, new_state, new_state}
   end
 
-  def handle_call({:join, player_pid}, _from, state) do
+  def handle_call({:join, player}, _from, state) do
     cond do
       is_nil(state.x) ->
-        state = %{state | x: player_pid}
+        state = %{state | x: player}
         {:reply, {:ok, :x, state}, state}
       is_nil(state.o) ->
-        state = %{state | o: player_pid}
+        state = %{state | o: player}
         {:reply, {:ok, :o, state}, state}
       true ->
         {:reply, :error, state}
@@ -69,7 +69,7 @@ defmodule TicTacToe.Game do
   end
 
   def handle_call({:put, value, position}, _form, %{next: value} = state) do
-    case TicTacToe.Board.put(state.board, value, position) do
+    case TicTacToe.Board.put(state.board, position, value) do
       {:ok, board} ->
         state = %{state | board: board}
         cond do
