@@ -10,7 +10,9 @@ defmodule TicTacToe.Game do
             o: nil,
             first: :x,
             next: :x,
-            finished: false
+            finished: false,
+            victories_x: 0,
+            victories_o: 0
   )
 
   def start_link(name) do
@@ -68,13 +70,19 @@ defmodule TicTacToe.Game do
     {:reply, :finished, state}
   end
 
-  def handle_call({:put, value, position}, _form, %{next: value} = state) do
+  def handle_call({:put, value, position}, _from, %{next: value} = state) do
     case TicTacToe.Board.put(state.board, position, value) do
       {:ok, board} ->
         state = %{state | board: board}
         cond do
           winner = TicTacToe.Board.winner(board) ->
-            state = %{state | finished: true}
+            state =
+              case winner do
+                :x ->
+                  %{state | finished: true, victories_x: state.victories_x + 1}
+                :o ->
+                  %{state | finished: true, victories_o: state.victories_o + 1}
+              end
             {:reply, {:winner, winner, state}, state}
           TicTacToe.Board.full?(board) ->
             state = %{state | finished: true}

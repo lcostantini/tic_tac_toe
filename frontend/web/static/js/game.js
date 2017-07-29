@@ -8,6 +8,8 @@ let Game = {
   oName: document.getElementById("o_name"),
   xTurn: document.getElementById("x_turn"),
   oTurn: document.getElementById("o_turn"),
+  victoriesX: document.getElementById("victories_x"),
+  victoriesO: document.getElementById("victories_o"),
 
   init(socket) {
     socket.connect()
@@ -90,6 +92,8 @@ let Game = {
   updateStats(game) {
     this.xName.innerHTML = game.x
     this.oName.innerHTML = game.o
+    this.victoriesX.innerHTML = game.victories_x
+    this.victoriesO.innerHTML = game.victories_o
   },
 
   showNext(symbol) {
