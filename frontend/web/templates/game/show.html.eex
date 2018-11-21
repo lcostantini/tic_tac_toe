@@ -31,12 +31,20 @@
       <span id="x_name"></span>
       <span>(x)</span>
     </div>
+    <div class="victories">
+      <span>Victories: </span>
+      <span id="victories_x"></span>
+    </div>
   </div>
   <div id="o" class="block">
     <div class="name">
       <span id="o_name"></span>
       <span>(o)</span>
       <span id="o_turn" class="turn">&#8678;</span>
+    </div>
+    <div class="victories">
+      <span>Victories: </span>
+      <span id="victories_o"></span>
     </div>
   </div>
 </div>
